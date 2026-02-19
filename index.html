@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eyad Adel | Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Glassmorphism Color Palette */
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.06);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-color: #38bdf8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            /* Subtle abstract gradient background to make the glass pop */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Utility */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Header / Profile Section */
+        .header-section {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--glass-border);
+            background-color: #1e293b;
+        }
+
+        .header-info h1 {
+            font-size: 2.75rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-info h2 {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 1.25rem;
+        }
+
+        .header-info p {
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.25rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .section-title i {
+            color: var(--accent-color);
+            font-size: 1.25rem;
+        }
+
+        /* Skills Grid */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            letter-spacing: 0.3px;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            margin-bottom: 0;
+            height: 100%;
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .project-card h3 i {
+            color: var(--accent-color);
+            font-size: 1rem;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s ease;
+            width: fit-content;
+        }
+
+        .project-link:hover {
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="glass-card header-section">
+            <img src="https://via.placeholder.com/160x160/1e293b/94a3b8?text=Image" alt="Profile Picture" class="profile-pic">
+            
+            <div class="header-info">
+                <h1>Eyad Adel</h1>
+                <h2>Data Analysis Specialist Trainee | CCSED Engineering Student</h2>
+                <p>
+                    Engineering student at Mansoura University specializing in Computer Science and Control Systems. Currently a DEPI Trainee focused on data analysis, transforming datasets into structural insights, and building technical solutions bridging software and analytics.
+                </p>
+                <div class="social-links">
+                    <a href="https://github.com/Eyadade1" target="_blank" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:your.email@example.com" aria-label="Email Me"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </header>
+
+        <section class="glass-card">
+            <h2 class="section-title"><i class="fas fa-terminal"></i> Technical Stack & Skills</h2>
+            <div class="skills-container">
+                <span class="skill-badge">Data Analysis</span>
+                <span class="skill-badge">Data Visualization</span>
+                <span class="skill-badge">Python</span>
+                <span class="skill-badge">C / C++</span>
+                <span class="skill-badge">Data Structures & Algorithms</span>
+                <span class="skill-badge">Artificial Intelligence</span>
+                <span class="skill-badge">Control Systems</span>
+                <span class="skill-badge">Arduino</span>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title" style="margin-left: 0.5rem; margin-top: 3rem;"><i class="fas fa-layer-group"></i> Featured Projects</h2>
+            <div class="projects-grid">
+                
+                <article class="glass-card project-card">
+                    <h3><i class="fas fa-bolt"></i> Energy Insights 360</h3>
+                    <p>An interactive data dashboard analyzing energy consumption and costs across various building infrastructures. Focused on data processing, extracting critical structural metrics, and presenting tailored dynamic visual insights.</p>
+                    <a href="https://github.com/Eyadade1/Energy-Insights-360" target="_blank" class="project-link">
+                        View Repository <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <article class="glass-card project-card">
+                    <h3><i class="fas fa-chart-line"></i> Sales Insight 360</h3>
+                    <p>A structured dashboard built for a superstore dataset designed to track commercial sales metrics, identify financial performance trends, and output clear, actionable analytical insights.</p>
+                    <a href="https://github.com/Eyadade1/Sales-Insight-360" target="_blank" class="project-link">
+                        View Repository <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <article class="glass-card project-card">
+                    <h3><i class="fas fa-code-branch"></i> SimuGit</h3>
+                    <p>A local simulation of core version control functionalities implemented entirely in C. Leverages fundamental data structures like linked lists to manage file states, simulated commits, and repository history.</p>
+                    <a href="#" target="_blank" class="project-link">
+                        View Details <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <article class="glass-card project-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Education Performance Analysis</h3>
+                    <p>A final graduation project case study focusing on cleaning, structuring, and exploring an education analytics dataset to uncover statistically significant patterns in academic outcomes.</p>
+                    <a href="#" target="_blank" class="project-link">
+                        View Details <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Eyad Adel. Designed minimally with HTML & CSS.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
