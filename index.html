@@ -52,13 +52,13 @@
             height: 100vh;
             z-index: -1;
             overflow: hidden;
-            pointer-events: none; /* Allows clicking through to the content */
+            pointer-events: none; 
         }
 
         .floating-icon {
             position: absolute;
             color: var(--text-muted);
-            opacity: 0.15;
+            opacity: 0.12; /* Slightly more transparent for a cleaner look */
             user-select: none;
             will-change: transform;
         }
@@ -281,11 +281,12 @@
                 <span class="skill-badge">Data Analysis</span>
                 <span class="skill-badge">Data Visualization</span>
                 <span class="skill-badge">Python</span>
+                <span class="skill-badge">SQL</span>
+                <span class="skill-badge">Excel</span>
+                <span class="skill-badge">Power BI</span>
+                <span class="skill-badge">Tableau</span>
                 <span class="skill-badge">C / C++</span>
                 <span class="skill-badge">Data Structures & Algorithms</span>
-                <span class="skill-badge">Artificial Intelligence</span>
-                <span class="skill-badge">Control Systems</span>
-                <span class="skill-badge">Arduino</span>
             </div>
         </section>
 
@@ -337,16 +338,15 @@
     <script>
         const container = document.getElementById('particles-container');
         
-        // Font Awesome icons representing your skills
+        // Font Awesome icons representing your specific tools
         const iconClasses = [
-            '<i class="fa-brands fa-python"></i>',
-            '<i class="fa-solid fa-c"></i>',
-            '<i class="fa-solid fa-code"></i>', // Represents C++/Coding
-            '<i class="fa-solid fa-chart-pie"></i>', // Data Analysis
-            '<i class="fa-solid fa-robot"></i>', // AI
-            '<i class="fa-solid fa-microchip"></i>', // Arduino/Hardware
-            '<i class="fa-solid fa-project-diagram"></i>', // Data Structures
-            '<i class="fa-brands fa-github"></i>' // Git
+            '<i class="fa-brands fa-python" title="Python"></i>',
+            '<i class="fa-solid fa-file-excel" title="Excel"></i>',
+            '<i class="fa-solid fa-database" title="SQL"></i>',
+            '<i class="fa-solid fa-chart-column" title="Power BI"></i>',
+            '<i class="fa-solid fa-chart-pie" title="Tableau"></i>',
+            '<i class="fa-solid fa-c" title="C/C++"></i>',
+            '<i class="fa-solid fa-project-diagram" title="Algorithms"></i>'
         ];
 
         const numParticles = 25;
@@ -367,8 +367,8 @@
             el.className = 'floating-icon';
             el.innerHTML = iconClasses[Math.floor(Math.random() * iconClasses.length)];
             
-            // Randomize size and colors slightly for depth
-            let size = Math.random() * 20 + 20; 
+            // Randomize size slightly for depth
+            let size = Math.random() * 20 + 18; 
             el.style.fontSize = `${size}px`;
             
             container.appendChild(el);
@@ -377,10 +377,12 @@
                 el: el,
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
-                vx: (Math.random() - 0.5) * 1.5,
-                vy: (Math.random() - 0.5) * 1.5,
+                // SLOWED DOWN: Reduced initial velocity
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6,
                 angle: Math.random() * 360,
-                spin: (Math.random() - 0.5) * 2
+                // SLOWED DOWN: Reduced rotation speed
+                spin: (Math.random() - 0.5) * 0.4
             });
         }
 
@@ -402,21 +404,20 @@
                 let dist = Math.sqrt(dx * dx + dy * dy);
                 
                 if (dist < interactionRadius) {
-                    // Push away proportionally to how close the mouse is
+                    // Push away, but much gentler now
                     let force = (interactionRadius - dist) / interactionRadius;
-                    p.vx += (dx / dist) * force * 0.8;
-                    p.vy += (dy / dist) * force * 0.8;
+                    p.vx += (dx / dist) * force * 0.15;
+                    p.vy += (dy / dist) * force * 0.15;
                 }
 
-                // Friction & Speed Control (prevents them from flying off too fast)
+                // Friction & Speed Control (Keeps movement slow and steady)
                 let speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-                if (speed > 2.5) {
-                    p.vx = (p.vx / speed) * 2.5;
-                    p.vy = (p.vy / speed) * 2.5;
-                } else if (speed < 0.5) { 
-                    // Ensures they don't stop moving completely
-                    p.vx *= 1.02;
-                    p.vy *= 1.02;
+                if (speed > 1.0) { // SLOWED DOWN: Lower maximum speed cap
+                    p.vx = (p.vx / speed) * 1.0;
+                    p.vy = (p.vy / speed) * 1.0;
+                } else if (speed < 0.15) { // SLOWED DOWN: Lower minimum speed threshold
+                    p.vx *= 1.01;
+                    p.vy *= 1.01;
                 }
 
                 // Apply CSS Transform
