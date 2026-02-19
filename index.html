@@ -32,20 +32,43 @@
 
         body {
             background-color: var(--bg-color);
-            /* Subtle abstract gradient background to make the glass pop */
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.05), transparent 25%);
             background-attachment: fixed;
             color: var(--text-main);
             line-height: 1.6;
             min-height: 100vh;
             padding: 3rem 1.5rem;
+            position: relative;
         }
 
+        /* Interactive Background Container */
+        #particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none; /* Allows clicking through to the content */
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: var(--text-muted);
+            opacity: 0.15;
+            user-select: none;
+            will-change: transform;
+        }
+
+        /* Keep content above the background */
         .container {
             max-width: 1100px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         /* Glassmorphism Card Utility */
@@ -231,6 +254,8 @@
 </head>
 <body>
 
+    <div id="particles-container"></div>
+
     <div class="container">
         
         <header class="glass-card header-section">
@@ -303,8 +328,114 @@
             </div>
         </section>
 
+        <footer>
+            <p>&copy; 2026 Eyad Adel. Designed minimally with HTML, CSS & Vanilla JS.</p>
+        </footer>
 
     </div>
 
+    <script>
+        const container = document.getElementById('particles-container');
+        
+        // Font Awesome icons representing your skills
+        const iconClasses = [
+            '<i class="fa-brands fa-python"></i>',
+            '<i class="fa-solid fa-c"></i>',
+            '<i class="fa-solid fa-code"></i>', // Represents C++/Coding
+            '<i class="fa-solid fa-chart-pie"></i>', // Data Analysis
+            '<i class="fa-solid fa-robot"></i>', // AI
+            '<i class="fa-solid fa-microchip"></i>', // Arduino/Hardware
+            '<i class="fa-solid fa-project-diagram"></i>', // Data Structures
+            '<i class="fa-brands fa-github"></i>' // Git
+        ];
+
+        const numParticles = 25;
+        const particles = [];
+        
+        // Mouse tracking setup
+        let mouse = { x: -1000, y: -1000 };
+        const interactionRadius = 150;
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        // Initialize particles
+        for (let i = 0; i < numParticles; i++) {
+            let el = document.createElement('div');
+            el.className = 'floating-icon';
+            el.innerHTML = iconClasses[Math.floor(Math.random() * iconClasses.length)];
+            
+            // Randomize size and colors slightly for depth
+            let size = Math.random() * 20 + 20; 
+            el.style.fontSize = `${size}px`;
+            
+            container.appendChild(el);
+            
+            particles.push({
+                el: el,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 1.5,
+                vy: (Math.random() - 0.5) * 1.5,
+                angle: Math.random() * 360,
+                spin: (Math.random() - 0.5) * 2
+            });
+        }
+
+        // Animation Loop
+        function animate() {
+            particles.forEach(p => {
+                // Update position and rotation
+                p.x += p.vx;
+                p.y += p.vy;
+                p.angle += p.spin;
+
+                // Bounce off screen edges
+                if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+                if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+
+                // Mouse Repulsion Logic
+                let dx = p.x - mouse.x;
+                let dy = p.y - mouse.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < interactionRadius) {
+                    // Push away proportionally to how close the mouse is
+                    let force = (interactionRadius - dist) / interactionRadius;
+                    p.vx += (dx / dist) * force * 0.8;
+                    p.vy += (dy / dist) * force * 0.8;
+                }
+
+                // Friction & Speed Control (prevents them from flying off too fast)
+                let speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                if (speed > 2.5) {
+                    p.vx = (p.vx / speed) * 2.5;
+                    p.vy = (p.vy / speed) * 2.5;
+                } else if (speed < 0.5) { 
+                    // Ensures they don't stop moving completely
+                    p.vx *= 1.02;
+                    p.vy *= 1.02;
+                }
+
+                // Apply CSS Transform
+                p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg)`;
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        // Handle window resizing
+        window.addEventListener('resize', () => {
+            particles.forEach(p => {
+                if (p.x > window.innerWidth) p.x = window.innerWidth - 10;
+                if (p.y > window.innerHeight) p.y = window.innerHeight - 10;
+            });
+        });
+
+        // Start animation
+        animate();
+    </script>
 </body>
 </html>
