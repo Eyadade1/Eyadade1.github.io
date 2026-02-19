@@ -58,7 +58,7 @@
         .floating-icon {
             position: absolute;
             color: var(--text-muted);
-            opacity: 0.12; /* Slightly more transparent for a cleaner look */
+            opacity: 0.12;
             user-select: none;
             will-change: transform;
         }
@@ -94,17 +94,25 @@
         .header-section {
             display: flex;
             align-items: center;
+            justify-content: space-between; /* Pushes text to left, image to right */
             gap: 2.5rem;
             flex-wrap: wrap;
         }
 
         .profile-pic {
-            width: 160px;
-            height: 160px;
+            width: 200px; /* Increased from 160px */
+            height: 200px; /* Increased from 160px */
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--glass-border);
             background-color: #1e293b;
+            order: 2; /* Places image on the right on desktop */
+        }
+
+        .header-info {
+            order: 1; /* Places text on the left */
+            flex: 1; /* Allows text section to fill available space */
+            min-width: 300px; /* Prevents text from squishing too much before wrapping */
         }
 
         .header-info h1 {
@@ -246,6 +254,12 @@
                 text-align: center;
                 gap: 1.5rem;
             }
+            .profile-pic {
+                order: 1; /* Keeps image on top for mobile devices */
+            }
+            .header-info {
+                order: 2; /* Keeps text below image for mobile devices */
+            }
             .social-links {
                 justify-content: center;
             }
@@ -259,7 +273,7 @@
     <div class="container">
         
         <header class="glass-card header-section">
-<img src="images/unnamed.png" alt="Profile Picture" class="profile-pic">            
+            <img src="images/unnamed.png" alt="Profile Picture" class="profile-pic">            
             <div class="header-info">
                 <h1>Eyad Adel Elsherbiny</h1>
                 <h2>Data Analysis Specialist Trainee | CCSED Engineering Student</h2>
