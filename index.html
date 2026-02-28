@@ -23,6 +23,10 @@
             --accent-color: #38bdf8;
         }
 
+        html {
+            scroll-behavior: smooth; /* Enables smooth scrolling for sidebar links */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -39,7 +43,8 @@
             color: var(--text-main);
             line-height: 1.6;
             min-height: 100vh;
-            padding: 3rem 1.5rem;
+            /* Adjusted padding to make room for the fixed sidebar */
+            padding: 3rem 1.5rem 3rem 260px; 
             position: relative;
         }
 
@@ -61,6 +66,42 @@
             opacity: 0.12;
             user-select: none;
             will-change: transform;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 2rem 1.5rem;
+        }
+
+        .sidebar-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-link i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-link:hover {
+            color: var(--accent-color);
+            transform: translateX(8px);
         }
 
         /* Keep content above the background */
@@ -245,9 +286,33 @@
             border-top: 1px solid var(--glass-border);
             color: var(--text-muted);
             font-size: 0.85rem;
+            scroll-margin-top: 2rem;
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            body {
+                padding: 8rem 1.5rem 3rem 1.5rem; /* Make room for horizontal top nav */
+            }
+            
+            .sidebar {
+                top: 1.5rem;
+                left: 1.5rem;
+                right: 1.5rem;
+                width: auto;
+                transform: none;
+                flex-direction: row;
+                justify-content: center;
+                padding: 1.25rem;
+                gap: 2rem;
+                border-radius: 15px;
+            }
+
+            .sidebar-link:hover {
+                transform: translateY(-3px); /* Move up instead of right horizontally */
+            }
+        }
+
         @media (max-width: 768px) {
             .header-section {
                 flex-direction: column;
@@ -264,15 +329,44 @@
                 justify-content: center;
             }
         }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+            .sidebar-link span {
+                display: none; /* Hide text on small screens, keep icons */
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="particles-container"></div>
 
+    <nav class="glass-card sidebar">
+        <a href="#about" class="sidebar-link">
+            <i class="fas fa-user"></i>
+            <span>About</span>
+        </a>
+        <a href="#skills" class="sidebar-link">
+            <i class="fas fa-laptop-code"></i>
+            <span>Skills</span>
+        </a>
+        <a href="#projects" class="sidebar-link">
+            <i class="fas fa-briefcase"></i>
+            <span>Projects</span>
+        </a>
+        <a href="#contact" class="sidebar-link">
+            <i class="fas fa-paper-plane"></i>
+            <span>Contact</span>
+        </a>
+    </nav>
+
     <div class="container">
         
-        <header class="glass-card header-section">
+        <header class="glass-card header-section" id="about">
             <img src="images/unnamed.pppppng" alt="Profile Picture" class="profile-pic">            
             <div class="header-info">
                 <h1>Eyad Adel Elsherbiny</h1>
@@ -288,7 +382,7 @@
             </div>
         </header>
 
-        <section class="glass-card">
+        <section class="glass-card" id="skills">
             <h2 class="section-title"><i class="fas fa-terminal"></i> Technical Stack & Skills</h2>
             <div class="skills-container">
                 <span class="skill-badge">Data Analysis</span>
@@ -303,7 +397,7 @@
             </div>
         </section>
 
-        <section>
+        <section id="projects">
             <h2 class="section-title" style="margin-left: 0.5rem; margin-top: 3rem;"><i class="fas fa-layer-group"></i> Featured Projects</h2>
             <div class="projects-grid">
                 
@@ -342,6 +436,9 @@
             </div>
         </section>
 
+        <footer id="contact">
+            <p>Ready to collaborate? <a href="mailto:eelsherbainy@gmail.com" style="color: var(--accent-color); text-decoration: none;">Send me an email</a></p>
+        </footer>
 
     </div>
 
