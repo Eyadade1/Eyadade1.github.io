@@ -43,32 +43,65 @@
             position: relative;
         }
 
-        /* Interactive Background Container */
-        #particles-container {
+        /* Sidebar */
+        .sidebar {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none; 
+            top: 50%;
+            left: 1rem;
+            transform: translateY(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 999;
         }
 
-        .floating-icon {
-            position: absolute;
-            color: var(--text-muted);
-            opacity: 0.12;
-            user-select: none;
-            will-change: transform;
+        .sidebar ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        /* Keep content above the background */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
+        .sidebar ul li a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .download-cv {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent-color);
+            color: #0f172a;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .download-cv:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
         }
 
         /* Glassmorphism Card Utility */
@@ -270,9 +303,20 @@
 
     <div id="particles-container"></div>
 
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="files/Eyad_Adel_CV.pdf" download class="download-cv">Download CV <i class="fas fa-download"></i></a>
+    </nav>
+
     <div class="container">
         
-        <header class="glass-card header-section">
+        <header id="about" class="glass-card header-section">
             <img src="images/unnamed.pppppng" alt="Profile Picture" class="profile-pic">            
             <div class="header-info">
                 <h1>Eyad Adel Elsherbiny</h1>
@@ -288,7 +332,7 @@
             </div>
         </header>
 
-        <section class="glass-card">
+        <section id="skills" class="glass-card">
             <h2 class="section-title"><i class="fas fa-terminal"></i> Technical Stack & Skills</h2>
             <div class="skills-container">
                 <span class="skill-badge">Data Analysis</span>
@@ -303,7 +347,7 @@
             </div>
         </section>
 
-        <section>
+        <section id="projects">
             <h2 class="section-title" style="margin-left: 0.5rem; margin-top: 3rem;"><i class="fas fa-layer-group"></i> Featured Projects</h2>
             <div class="projects-grid">
                 
@@ -323,130 +367,14 @@
                     </a>
                 </article>
 
-                <article class="glass-card project-card">
-                    <h3><i class="fas fa-code-branch"></i> SimuGit</h3>
-                    <p>A local simulation of core version control functionalities implemented entirely in C. Leverages fundamental data structures like linked lists to manage file states, simulated commits, and repository history.</p>
-                    <a href="#" target="_blank" class="project-link">
-                        View Details <i class="fas fa-arrow-right"></i>
-                    </a>
-                </article>
-
-                <article class="glass-card project-card">
-                    <h3><i class="fas fa-graduation-cap"></i> Education Performance Analysis</h3>
-                    <p>A final graduation project case study focusing on cleaning, structuring, and exploring an education analytics dataset to uncover statistically significant patterns in academic outcomes.</p>
-                    <a href="#" target="_blank" class="project-link">
-                        View Details <i class="fas fa-arrow-right"></i>
-                    </a>
-                </article>
-
             </div>
         </section>
 
+        <section id="contact" class="glass-card">
+            <h2 class="section-title"><i class="fas fa-envelope"></i> Contact Me</h2>
+            <p>Email: eelsherbainy@gmail.com</p>
+        </section>
 
     </div>
-
-    <script>
-        const container = document.getElementById('particles-container');
-        
-        // Font Awesome icons representing your specific tools
-        const iconClasses = [
-            '<i class="fa-brands fa-python" title="Python"></i>',
-            '<i class="fa-solid fa-file-excel" title="Excel"></i>',
-            '<i class="fa-solid fa-database" title="SQL"></i>',
-            '<i class="fa-solid fa-chart-column" title="Power BI"></i>',
-            '<i class="fa-solid fa-chart-pie" title="Tableau"></i>',
-            '<i class="fa-solid fa-c" title="C/C++"></i>',
-            '<i class="fa-solid fa-project-diagram" title="Algorithms"></i>'
-        ];
-
-        const numParticles = 25;
-        const particles = [];
-        
-        // Mouse tracking setup
-        let mouse = { x: -1000, y: -1000 };
-        const interactionRadius = 150;
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        // Initialize particles
-        for (let i = 0; i < numParticles; i++) {
-            let el = document.createElement('div');
-            el.className = 'floating-icon';
-            el.innerHTML = iconClasses[Math.floor(Math.random() * iconClasses.length)];
-            
-            // Randomize size slightly for depth
-            let size = Math.random() * 20 + 18; 
-            el.style.fontSize = `${size}px`;
-            
-            container.appendChild(el);
-            
-            particles.push({
-                el: el,
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                // SLOWED DOWN: Reduced initial velocity
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
-                angle: Math.random() * 360,
-                // SLOWED DOWN: Reduced rotation speed
-                spin: (Math.random() - 0.5) * 0.4
-            });
-        }
-
-        // Animation Loop
-        function animate() {
-            particles.forEach(p => {
-                // Update position and rotation
-                p.x += p.vx;
-                p.y += p.vy;
-                p.angle += p.spin;
-
-                // Bounce off screen edges
-                if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
-                if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
-
-                // Mouse Repulsion Logic
-                let dx = p.x - mouse.x;
-                let dy = p.y - mouse.y;
-                let dist = Math.sqrt(dx * dx + dy * dy);
-                
-                if (dist < interactionRadius) {
-                    // Push away, but much gentler now
-                    let force = (interactionRadius - dist) / interactionRadius;
-                    p.vx += (dx / dist) * force * 0.15;
-                    p.vy += (dy / dist) * force * 0.15;
-                }
-
-                // Friction & Speed Control (Keeps movement slow and steady)
-                let speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-                if (speed > 1.0) { // SLOWED DOWN: Lower maximum speed cap
-                    p.vx = (p.vx / speed) * 1.0;
-                    p.vy = (p.vy / speed) * 1.0;
-                } else if (speed < 0.15) { // SLOWED DOWN: Lower minimum speed threshold
-                    p.vx *= 1.01;
-                    p.vy *= 1.01;
-                }
-
-                // Apply CSS Transform
-                p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg)`;
-            });
-            
-            requestAnimationFrame(animate);
-        }
-
-        // Handle window resizing
-        window.addEventListener('resize', () => {
-            particles.forEach(p => {
-                if (p.x > window.innerWidth) p.x = window.innerWidth - 10;
-                if (p.y > window.innerHeight) p.y = window.innerHeight - 10;
-            });
-        });
-
-        // Start animation
-        animate();
-    </script>
 </body>
 </html>
