@@ -288,24 +288,74 @@
             margin-bottom: 0;
             height: 100%;
         }
-.project-image {
-    width: 100%;
-    height: auto; 
-    aspect-ratio: 1849 / 640; /* السر هنا: بنجبر المتصفح يعمل مستطيل بنفس نسبة أبعاد صورتك بالمللي */
-    object-fit: cover; /* دلوقتي هتملى المكان بالكامل من غير ما يتقص منها أي حاجة */
-    object-position: center;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--glass-border);
-    background-color: rgba(0, 0, 0, 0.2);
-    opacity: 0.85;
-    transition: all 0.4s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
+
+        /* Project Image Styles */
+        .project-image {
+            width: 100%;
+            height: auto; 
+            aspect-ratio: 1849 / 640; 
+            object-fit: cover; 
+            object-position: top;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+            background-color: rgba(0, 0, 0, 0.2);
+            opacity: 0.85;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
 
         .project-card:hover .project-image {
             opacity: 1;
             border-color: rgba(56, 189, 248, 0.4);
+            transform: scale(1.02);
+        }
+
+        /* Modal Styles */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            border: 1px solid var(--glass-border);
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--text-main);
+            font-size: 3rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-color);
         }
 
         .project-card h3 {
@@ -459,9 +509,6 @@
             .projects-grid {
                 grid-template-columns: 1fr; 
             }
-            .project-image {
-                height: 180px; /* Slightly smaller image height on mobile */
-            }
         }
     </style>
 </head>
@@ -540,7 +587,7 @@
             <div class="projects-grid">
                 
                 <article class="glass-card project-card">
-                    <img src="images/Energy-Insights-360.png" alt="Energy Insights Dashboard preview" class="project-image">
+                    <img src="images/Energy Insights 360.png" alt="Energy Insights Dashboard preview" class="project-image">
                     
                     <h3><i class="fas fa-bolt"></i> Energy Insights 360</h3>
                     <p>A dynamic data dashboard analyzing energy consumption and costs to drive infrastructure efficiency and optimize resource management.</p>
@@ -550,7 +597,7 @@
                 </article>
 
                 <article class="glass-card project-card">
-                    <img src="images/Sales-Insight-360.png" alt="Sales Insight Dashboard preview" class="project-image">
+                    <img src="images/Sales Insight 360.png" alt="Sales Insight Dashboard preview" class="project-image">
                     
                     <h3><i class="fas fa-chart-line"></i> Sales Insight 360</h3>
                     <p>A comprehensive dashboard tracking commercial sales metrics and financial trends to deliver clear, actionable business intelligence.</p>
@@ -570,7 +617,13 @@
 
     </div>
 
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="fullImage" alt="Full Project Image">
+    </div>
+
     <script>
+        // Navigation active state logic
         const sections = document.querySelectorAll("header, section, footer");
         const navLinks = document.querySelectorAll(".sidebar-link");
 
@@ -594,8 +647,8 @@
             });
         });
 
+        // Background Particles Logic
         const container = document.getElementById('particles-container');
-        
         const iconClasses = [
             '<i class="fa-brands fa-python" title="Python"></i>',
             '<i class="fa-solid fa-file-excel" title="Excel"></i>',
@@ -608,7 +661,6 @@
 
         const numParticles = 25;
         const particles = [];
-        
         let mouse = { x: -1000, y: -1000 };
         const interactionRadius = 150;
 
@@ -680,6 +732,32 @@
         });
 
         animate();
+
+        // Modal Logic
+        const modal = document.getElementById("imageModal");
+        const fullImage = document.getElementById("fullImage");
+        const closeBtn = document.querySelector(".close-modal");
+        const projectImages = document.querySelectorAll(".project-image");
+
+        projectImages.forEach(img => {
+            img.addEventListener("click", function() {
+                modal.classList.add("show");
+                fullImage.src = this.src;
+                document.body.style.overflow = "hidden";
+            });
+        });
+
+        closeBtn.addEventListener("click", () => {
+            modal.classList.remove("show");
+            document.body.style.overflow = "auto";
+        });
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.remove("show");
+                document.body.style.overflow = "auto";
+            }
+        });
     </script>
 </body>
 </html>
