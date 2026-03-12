@@ -303,16 +303,15 @@
             opacity: 0.85;
             transition: all 0.4s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
+            cursor: zoom-in; /* غيرت شكل الماوس لعدسة عشان الزائر يفهم إنها بتتكبر */
         }
 
         .project-card:hover .project-image {
             opacity: 1;
             border-color: rgba(56, 189, 248, 0.4);
-            transform: scale(1.02);
         }
 
-        /* Modal Styles */
+        /* Hover Modal Styles */
         .image-modal {
             display: none;
             position: fixed;
@@ -321,12 +320,13 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.85); /* خلفية معتمة للمودال */
+            backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+            pointer-events: none; /* دي التريكة اللي بتخلي الماوس يفضل شغال على الصورة الأصلية */
         }
 
         .image-modal.show {
@@ -335,27 +335,18 @@
         }
 
         .modal-content {
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 95%; /* كبرت العرض شوية عشان الداشبورد تظهر بأفضل شكل */
+            max-height: 95%;
             border-radius: 12px;
             box-shadow: 0 10px 50px rgba(0,0,0,0.5);
             border: 1px solid var(--glass-border);
             object-fit: contain;
+            transition: transform 0.3s ease;
+            transform: scale(0.95); /* تأثير دخول خفيف */
         }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: var(--text-main);
-            font-size: 3rem;
-            font-weight: 300;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: var(--accent-color);
+        
+        .image-modal.show .modal-content {
+            transform: scale(1);
         }
 
         .project-card h3 {
@@ -587,7 +578,7 @@
             <div class="projects-grid">
                 
                 <article class="glass-card project-card">
-                    <img src="images/Energy-Insights-360.png" alt="Energy Insights Dashboard preview" class="project-image">
+                    <img src="images/Energy Insights 360.png" alt="Energy Insights Dashboard preview" class="project-image">
                     
                     <h3><i class="fas fa-bolt"></i> Energy Insights 360</h3>
                     <p>A dynamic data dashboard analyzing energy consumption and costs to drive infrastructure efficiency and optimize resource management.</p>
@@ -597,7 +588,7 @@
                 </article>
 
                 <article class="glass-card project-card">
-                    <img src="images/Sales-Insight-360.png" alt="Sales Insight Dashboard preview" class="project-image">
+                    <img src="images/Sales Insight 360.png" alt="Sales Insight Dashboard preview" class="project-image">
                     
                     <h3><i class="fas fa-chart-line"></i> Sales Insight 360</h3>
                     <p>A comprehensive dashboard tracking commercial sales metrics and financial trends to deliver clear, actionable business intelligence.</p>
@@ -618,7 +609,6 @@
     </div>
 
     <div id="imageModal" class="image-modal">
-        <span class="close-modal">&times;</span>
         <img class="modal-content" id="fullImage" alt="Full Project Image">
     </div>
 
@@ -733,30 +723,22 @@
 
         animate();
 
-        // Modal Logic
+        // Hover Modal Logic (الجزء الجديد)
         const modal = document.getElementById("imageModal");
         const fullImage = document.getElementById("fullImage");
-        const closeBtn = document.querySelector(".close-modal");
         const projectImages = document.querySelectorAll(".project-image");
 
         projectImages.forEach(img => {
-            img.addEventListener("click", function() {
+            // أول ما الماوس يدخل على الصورة
+            img.addEventListener("mouseenter", function() {
                 modal.classList.add("show");
                 fullImage.src = this.src;
-                document.body.style.overflow = "hidden";
             });
-        });
 
-        closeBtn.addEventListener("click", () => {
-            modal.classList.remove("show");
-            document.body.style.overflow = "auto";
-        });
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
+            // أول ما الماوس يخرج من الصورة
+            img.addEventListener("mouseleave", function() {
                 modal.classList.remove("show");
-                document.body.style.overflow = "auto";
-            }
+            });
         });
     </script>
 </body>
