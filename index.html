@@ -71,11 +71,12 @@
         .sidebar {
             position: fixed;
             right: 2rem;
-            top: 40%; /* تم التعديل لرفع القائمة لأعلى */
+            top: 50%; /* رجعناها للوسط عشان تنزل شوية */
             transform: translateY(-50%);
             z-index: 10;
             display: flex;
             flex-direction: column;
+            align-items: flex-end; /* لضمان محاذاة كل العناصر لليمين */
             gap: 2rem;
             padding: 1rem;
         }
@@ -144,19 +145,27 @@
             box-shadow: 0 0 10px var(--accent-color); 
         }
 
-        /* تنسيقات زر الـ CV الجديد */
-        .cv-link {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .cv-link i {
+        /* زر السيرة الذاتية الجديد - ستايل Get In Touch */
+        .cv-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.75rem 1.5rem;
+            background-color: rgba(56, 189, 248, 0.1);
             color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            margin-top: 3.5rem; /* مسافة كبيرة تفصله عن باقي القائمة */
         }
 
-        .cv-link:hover i {
-            text-shadow: 0 0 15px var(--accent-glow); 
+        .cv-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .container {
@@ -461,6 +470,7 @@
                 transform: none;
                 flex-direction: row;
                 justify-content: space-around;
+                align-items: center;
                 background: rgba(15, 23, 42, 0.8);
                 backdrop-filter: blur(10px);
                 border-top: 1px solid var(--glass-border);
@@ -487,11 +497,11 @@
                 display: none; 
             }
 
-            /* إزالة الفواصل لزر السيرة الذاتية في الموبايل */
-            .cv-link {
+            /* تظبيط زر السيرة الذاتية في الموبايل */
+            .cv-btn {
                 margin-top: 0;
-                padding-top: 0;
-                border-top: none;
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
             }
         }
 
@@ -515,6 +525,13 @@
             }
             .sidebar-link span {
                 display: none; 
+            }
+            /* إخفاء نص السيرة الذاتية عشان مساحة شاشة الموبايل */
+            .cv-btn span {
+                display: none;
+            }
+            .cv-btn {
+                padding: 0.6rem 0.8rem;
             }
             .glass-card {
                 padding: 2rem; 
@@ -551,9 +568,8 @@
             <i class="fas fa-paper-plane"></i>
         </a>
         
-        <a href="Eyad_Adel_CV.pdf" download class="sidebar-link cv-link">
-            <span>Download CV</span>
-            <i class="fas fa-file-download"></i>
+        <a href="Eyad_Adel_CV.pdf" download class="cv-btn">
+            <i class="fas fa-file-download"></i> <span>Download CV</span>
         </a>
     </nav>
 
@@ -656,7 +672,6 @@
                 }
             });
 
-            // الشرط الجديد: لو وصلنا لآخر الصفحة بالظبط، خلي السيكشن الحالي هو contact
             if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 10) {
                 current = "contact";
             }
