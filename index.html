@@ -288,18 +288,18 @@
             margin-bottom: 0;
             height: 100%;
         }
-
-        .project-image {
+.project-image {
     width: 100%;
-    height: 200px; /* قللنا الارتفاع حاجة بسيطة عشان تناسب الصور العريضة */
-    object-fit: contain; /* السر هنا: بيجبر الصورة تظهر كاملة من غير أي قص */
+    height: auto; /* بنخلي الارتفاع تلقائي عشان يتناسب مع العرض */
+    aspect-ratio: 16 / 9; /* السر هنا: بيجبر كل الصور تاخد شكل مستطيل متناسق (زي شاشة اللاب توب) */
+    object-fit: cover; /* بيخلي الصورة تملى المساحة دي بالكامل بدون أي مساحات فاضية */
+    object-position: top; /* لو الصورة أطول من المساحة، بيركز على الجزء العلوي اللي فيه أهم داتا */
     border-radius: 12px;
     margin-bottom: 1.5rem;
     border: 1px solid var(--glass-border);
     opacity: 0.85;
     transition: all 0.4s ease;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    background-color: rgba(0, 0, 0, 0.15); /* خلفية غامقة شفافة عشان لو الصورة أبعادها مختلفة تندمج مع التصميم */
 }
 
         .project-card:hover .project-image {
