@@ -290,13 +290,14 @@
         }
 .project-image {
     width: 100%;
-    height: auto; /* بنخلي الارتفاع تلقائي عشان يتناسب مع العرض */
-    aspect-ratio: 16 / 9; /* السر هنا: بيجبر كل الصور تاخد شكل مستطيل متناسق (زي شاشة اللاب توب) */
-    object-fit: cover; /* بيخلي الصورة تملى المساحة دي بالكامل بدون أي مساحات فاضية */
-    object-position: top; /* لو الصورة أطول من المساحة، بيركز على الجزء العلوي اللي فيه أهم داتا */
+    height: auto; 
+    aspect-ratio: 1849 / 640; /* السر هنا: بنجبر المتصفح يعمل مستطيل بنفس نسبة أبعاد صورتك بالمللي */
+    object-fit: cover; /* دلوقتي هتملى المكان بالكامل من غير ما يتقص منها أي حاجة */
+    object-position: center;
     border-radius: 12px;
     margin-bottom: 1.5rem;
     border: 1px solid var(--glass-border);
+    background-color: rgba(0, 0, 0, 0.2);
     opacity: 0.85;
     transition: all 0.4s ease;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
