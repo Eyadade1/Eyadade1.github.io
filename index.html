@@ -303,7 +303,7 @@
             opacity: 0.85;
             transition: all 0.4s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            cursor: zoom-in; /* غيرت شكل الماوس لعدسة عشان الزائر يفهم إنها بتتكبر */
+            cursor: zoom-in; 
         }
 
         .project-card:hover .project-image {
@@ -320,13 +320,13 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(15, 23, 42, 0.85); /* خلفية معتمة للمودال */
+            background-color: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease;
-            pointer-events: none; /* دي التريكة اللي بتخلي الماوس يفضل شغال على الصورة الأصلية */
+            pointer-events: none;
         }
 
         .image-modal.show {
@@ -335,14 +335,14 @@
         }
 
         .modal-content {
-            max-width: 95%; /* كبرت العرض شوية عشان الداشبورد تظهر بأفضل شكل */
+            max-width: 95%; 
             max-height: 95%;
             border-radius: 12px;
             box-shadow: 0 10px 50px rgba(0,0,0,0.5);
             border: 1px solid var(--glass-border);
             object-fit: contain;
             transition: transform 0.3s ease;
-            transform: scale(0.95); /* تأثير دخول خفيف */
+            transform: scale(0.95);
         }
         
         .image-modal.show .modal-content {
@@ -629,9 +629,14 @@
                 }
             });
 
+            // الشرط الجديد: لو وصلنا لآخر الصفحة بالظبط، خلي السيكشن الحالي هو contact
+            if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 10) {
+                current = "contact";
+            }
+
             navLinks.forEach((link) => {
                 link.classList.remove("active");
-                if (link.getAttribute("href").includes(current)) {
+                if (current && link.getAttribute("href").includes(current)) {
                     link.classList.add("active"); 
                 }
             });
@@ -723,19 +728,17 @@
 
         animate();
 
-        // Hover Modal Logic (الجزء الجديد)
+        // Hover Modal Logic 
         const modal = document.getElementById("imageModal");
         const fullImage = document.getElementById("fullImage");
         const projectImages = document.querySelectorAll(".project-image");
 
         projectImages.forEach(img => {
-            // أول ما الماوس يدخل على الصورة
             img.addEventListener("mouseenter", function() {
                 modal.classList.add("show");
                 fullImage.src = this.src;
             });
 
-            // أول ما الماوس يخرج من الصورة
             img.addEventListener("mouseleave", function() {
                 modal.classList.remove("show");
             });
