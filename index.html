@@ -107,7 +107,7 @@
             transition: all 0.4s ease;
         }
 
-        /* Hover and Active ("Yenour") State */
+        /* Hover and Active State */
         .sidebar-link:hover, 
         .sidebar-link.active {
             opacity: 1;
@@ -145,7 +145,7 @@
         }
 
         .container {
-            max-width: 1250px; 
+            max-width: 950px; /* Reduced from 1250px */
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -157,8 +157,8 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 3rem; 
-            margin-bottom: 2.5rem; 
+            padding: 2rem; /* Reduced from 3rem */
+            margin-bottom: 2rem; /* Reduced from 2.5rem */
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
         }
@@ -178,8 +178,8 @@
         }
 
         .profile-pic {
-            width: 240px; 
-            height: 240px; 
+            width: 180px; /* Reduced from 240px */
+            height: 180px; /* Reduced from 240px */
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--glass-border);
@@ -194,7 +194,7 @@
         }
 
         .header-info h1 {
-            font-size: 3.2rem; 
+            font-size: 2.8rem; /* Reduced from 3.2rem */
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
@@ -208,10 +208,10 @@
         }
 
         .header-info p {
-            color: var(--text-main); /* Slightly brighter for the punchy text */
+            color: var(--text-main);
             max-width: 750px; 
             margin-bottom: 2rem;
-            font-size: 1.15rem; /* Made this slightly larger for impact */
+            font-size: 1.05rem; /* Reduced from 1.15rem */
             line-height: 1.7;
             font-weight: 300;
         }
@@ -240,7 +240,6 @@
             color: var(--accent-color);
         }
 
-        /* Specifically style the WhatsApp hover color */
         .social-links a.whatsapp-link:hover {
             color: #25D366; 
         }
@@ -278,14 +277,14 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2rem; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Reduced from 380px */
+            gap: 1.5rem; /* Reduced from 2rem */
         }
 
         .project-card {
             display: flex;
             flex-direction: column;
-            padding: 2.5rem; 
+            padding: 2rem; /* Reduced from 2.5rem */
             margin-bottom: 0;
             height: 100%;
         }
@@ -370,7 +369,7 @@
 
         @media (max-width: 1200px) {
             .projects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
         }
 
@@ -422,8 +421,8 @@
             }
             .profile-pic {
                 order: 1; 
-                width: 200px;
-                height: 200px;
+                width: 150px; /* Reduced to maintain scale on mobile */
+                height: 150px; /* Reduced to maintain scale on mobile */
             }
             .header-info {
                 order: 2; 
