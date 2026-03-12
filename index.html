@@ -309,6 +309,7 @@
             padding: 2.5rem; 
             margin-bottom: 0;
             height: 100%;
+            cursor: pointer; /* ضفنا دي عشان الماوس يبان انه ممكن يضغط أو يقف عليه */
         }
 
         .project-image {
@@ -324,7 +325,6 @@
             opacity: 0.85;
             transition: all 0.4s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            cursor: zoom-in; 
         }
 
         .project-card:hover .project-image {
@@ -686,17 +686,20 @@
         }
         animate();
 
-        // Image Modal Logic
+        // Image Modal Logic (Updated)
         const modal = document.getElementById("imageModal");
         const fullImage = document.getElementById("fullImage");
-        const projectImages = document.querySelectorAll(".project-image");
+        const projectCards = document.querySelectorAll(".project-card");
 
-        projectImages.forEach(img => {
-            img.addEventListener("mouseenter", function() {
-                modal.classList.add("show");
-                fullImage.src = this.src;
+        projectCards.forEach(card => {
+            card.addEventListener("mouseenter", function() {
+                const img = this.querySelector(".project-image");
+                if(img) {
+                    modal.classList.add("show");
+                    fullImage.src = img.src;
+                }
             });
-            img.addEventListener("mouseleave", function() {
+            card.addEventListener("mouseleave", function() {
                 modal.classList.remove("show");
             });
         });
