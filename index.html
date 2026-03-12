@@ -71,12 +71,12 @@
         .sidebar {
             position: fixed;
             right: 2rem;
-            top: 50%; /* رجعناها للوسط عشان تنزل شوية */
+            top: 58%; /* نزلناها لتحت شوية كمان */
             transform: translateY(-50%);
             z-index: 10;
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* لضمان محاذاة كل العناصر لليمين */
+            align-items: flex-end; 
             gap: 2rem;
             padding: 1rem;
         }
@@ -145,7 +145,7 @@
             box-shadow: 0 0 10px var(--accent-color); 
         }
 
-        /* زر السيرة الذاتية الجديد - ستايل Get In Touch */
+        /* زر السيرة الذاتية */
         .cv-btn {
             display: inline-flex;
             align-items: center;
@@ -159,7 +159,7 @@
             font-weight: 500;
             font-size: 0.95rem;
             transition: all 0.3s ease;
-            margin-top: 3.5rem; /* مسافة كبيرة تفصله عن باقي القائمة */
+            margin-top: 3.5rem; /* مسافة تفصله عن باقي القائمة */
         }
 
         .cv-btn:hover {
@@ -526,7 +526,6 @@
             .sidebar-link span {
                 display: none; 
             }
-            /* إخفاء نص السيرة الذاتية عشان مساحة شاشة الموبايل */
             .cv-btn span {
                 display: none;
             }
@@ -656,7 +655,6 @@
     </div>
 
     <script>
-        // Navigation active state logic
         const sections = document.querySelectorAll("header, section, footer");
         const navLinks = document.querySelectorAll(".sidebar-link");
 
@@ -684,7 +682,6 @@
             });
         });
 
-        // Background Particles Logic
         const container = document.getElementById('particles-container');
         const iconClasses = [
             '<i class="fa-brands fa-python" title="Python"></i>',
@@ -770,7 +767,6 @@
 
         animate();
 
-        // Hover Modal Logic 
         const modal = document.getElementById("imageModal");
         const fullImage = document.getElementById("fullImage");
         const projectImages = document.querySelectorAll(".project-image");
