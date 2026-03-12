@@ -145,7 +145,7 @@
         }
 
         .container {
-            max-width: 1250px; 
+            max-width: 1100px; 
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -157,8 +157,8 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 3rem; 
-            margin-bottom: 2.5rem; 
+            padding: 2.5rem; 
+            margin-bottom: 2rem; 
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
         }
@@ -178,8 +178,8 @@
         }
 
         .profile-pic {
-            width: 240px; 
-            height: 240px; 
+            width: 210px; 
+            height: 210px; 
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--glass-border);
@@ -194,7 +194,7 @@
         }
 
         .header-info h1 {
-            font-size: 3.2rem; 
+            font-size: 3.0rem; 
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
@@ -211,7 +211,7 @@
             color: var(--text-main);
             max-width: 750px; 
             margin-bottom: 2rem;
-            font-size: 1.15rem; 
+            font-size: 1.1rem; 
             line-height: 1.7;
             font-weight: 300;
         }
@@ -277,8 +277,8 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns layout for neatness */
-            gap: 2rem; 
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+            gap: 1.75rem; 
         }
 
         .project-card {
@@ -289,15 +289,22 @@
             height: 100%;
         }
 
-        /* Styles for project images */
+        /* New Image Styles */
         .project-image {
             width: 100%;
-            height: auto;
+            height: 220px;
+            object-fit: cover;
             border-radius: 12px;
             margin-bottom: 1.5rem;
-            object-fit: cover;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0.85;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card:hover .project-image {
+            opacity: 1;
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
         .project-card h3 {
@@ -378,6 +385,12 @@
             box-shadow: 0 0 15px var(--accent-glow);
         }
 
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
         @media (max-width: 1024px) {
             body {
                 padding: 2rem 2rem 6rem 2rem; 
@@ -426,8 +439,8 @@
             }
             .profile-pic {
                 order: 1; 
-                width: 200px;
-                height: 200px;
+                width: 170px; 
+                height: 170px;
             }
             .header-info {
                 order: 2; 
@@ -444,6 +457,9 @@
             }
             .projects-grid {
                 grid-template-columns: 1fr; 
+            }
+            .project-image {
+                height: 180px; /* Slightly smaller image height on mobile */
             }
         }
     </style>
@@ -478,7 +494,7 @@
     <div class="container">
         
         <header class="glass-card header-section" id="home">
-            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&q=80&w=800" alt="Professional portrait of Eyad Adel" class="profile-pic">            
+            <img src="images/unnamed.png" alt="Profile Picture" class="profile-pic">            
             <div class="header-info">
                 <h1>Eyad Adel Elsherbiny</h1>
                 <h2>Data Analysis Specialist Trainee | CCSED Engineering Student</h2>
@@ -523,18 +539,20 @@
             <div class="projects-grid">
                 
                 <article class="glass-card project-card">
-                    <img src="images/energy-dashboard.png" alt="Screenshot of the Energy Insights 360 dashboard" class="project-image">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Energy Insights Dashboard preview" class="project-image">
+                    
                     <h3><i class="fas fa-bolt"></i> Energy Insights 360</h3>
-                    <p>A data dashboard for building energy analysis. Processes metrics to create interactive visual insights on consumption and cost.</p>
+                    <p>An interactive data dashboard analyzing energy consumption and costs across various building infrastructures. Focused on data processing, extracting critical structural metrics, and presenting tailored dynamic visual insights.</p>
                     <a href="https://github.com/Eyadade1/Energy-Insights-360" target="_blank" class="project-link">
                         View Repository <i class="fas fa-arrow-right"></i>
                     </a>
                 </article>
 
                 <article class="glass-card project-card">
-                    <img src="images/sales-dashboard.png" alt="Screenshot of the Sales Insight 360 dashboard" class="project-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="Sales Insight Dashboard preview" class="project-image">
+                    
                     <h3><i class="fas fa-chart-line"></i> Sales Insight 360</h3>
-                    <p>A dashboard for tracking superstore sales and financial performance. Delivers actionable insights into commercial trends.</p>
+                    <p>A structured dashboard built for a superstore dataset designed to track commercial sales metrics, identify financial performance trends, and output clear, actionable analytical insights.</p>
                     <a href="https://github.com/Eyadade1/Sales-Insight-360" target="_blank" class="project-link">
                         View Repository <i class="fas fa-arrow-right"></i>
                     </a>
