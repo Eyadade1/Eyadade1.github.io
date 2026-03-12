@@ -145,7 +145,7 @@
         }
 
         .container {
-            max-width: 1100px; /* Increased from 950px, down from original 1250px */
+            max-width: 1100px; 
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -157,7 +157,7 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 2.5rem; /* Increased from 2rem */
+            padding: 2.5rem; 
             margin-bottom: 2rem; 
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
@@ -178,8 +178,8 @@
         }
 
         .profile-pic {
-            width: 210px; /* Increased from 180px */
-            height: 210px; /* Increased from 180px */
+            width: 210px; 
+            height: 210px; 
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--glass-border);
@@ -194,7 +194,7 @@
         }
 
         .header-info h1 {
-            font-size: 3.0rem; /* Increased from 2.8rem */
+            font-size: 3.0rem; 
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
@@ -211,7 +211,7 @@
             color: var(--text-main);
             max-width: 750px; 
             margin-bottom: 2rem;
-            font-size: 1.1rem; /* Increased from 1.05rem */
+            font-size: 1.1rem; 
             line-height: 1.7;
             font-weight: 300;
         }
@@ -277,16 +277,34 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); /* Increased from 320px */
-            gap: 1.75rem; /* Increased from 1.5rem */
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+            gap: 1.75rem; 
         }
 
         .project-card {
             display: flex;
             flex-direction: column;
-            padding: 2.5rem; /* Matched to .glass-card */
+            padding: 2.5rem; 
             margin-bottom: 0;
             height: 100%;
+        }
+
+        /* New Image Styles */
+        .project-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+            opacity: 0.85;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card:hover .project-image {
+            opacity: 1;
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
         .project-card h3 {
@@ -421,7 +439,7 @@
             }
             .profile-pic {
                 order: 1; 
-                width: 170px; /* Scaled down smoothly for mobile */
+                width: 170px; 
                 height: 170px;
             }
             .header-info {
@@ -439,6 +457,9 @@
             }
             .projects-grid {
                 grid-template-columns: 1fr; 
+            }
+            .project-image {
+                height: 180px; /* Slightly smaller image height on mobile */
             }
         }
     </style>
@@ -518,6 +539,8 @@
             <div class="projects-grid">
                 
                 <article class="glass-card project-card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Energy Insights Dashboard preview" class="project-image">
+                    
                     <h3><i class="fas fa-bolt"></i> Energy Insights 360</h3>
                     <p>An interactive data dashboard analyzing energy consumption and costs across various building infrastructures. Focused on data processing, extracting critical structural metrics, and presenting tailored dynamic visual insights.</p>
                     <a href="https://github.com/Eyadade1/Energy-Insights-360" target="_blank" class="project-link">
@@ -526,26 +549,12 @@
                 </article>
 
                 <article class="glass-card project-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="Sales Insight Dashboard preview" class="project-image">
+                    
                     <h3><i class="fas fa-chart-line"></i> Sales Insight 360</h3>
                     <p>A structured dashboard built for a superstore dataset designed to track commercial sales metrics, identify financial performance trends, and output clear, actionable analytical insights.</p>
                     <a href="https://github.com/Eyadade1/Sales-Insight-360" target="_blank" class="project-link">
                         View Repository <i class="fas fa-arrow-right"></i>
-                    </a>
-                </article>
-
-                <article class="glass-card project-card">
-                    <h3><i class="fas fa-code-branch"></i> SimuGit</h3>
-                    <p>A local simulation of core version control functionalities implemented entirely in C. Leverages fundamental data structures like linked lists to manage file states, simulated commits, and repository history.</p>
-                    <a href="#" target="_blank" class="project-link">
-                        View Details <i class="fas fa-arrow-right"></i>
-                    </a>
-                </article>
-
-                <article class="glass-card project-card">
-                    <h3><i class="fas fa-graduation-cap"></i> Education Performance Analysis</h3>
-                    <p>A final graduation project case study focusing on cleaning, structuring, and exploring an education analytics dataset to uncover statistically significant patterns in academic outcomes.</p>
-                    <a href="#" target="_blank" class="project-link">
-                        View Details <i class="fas fa-arrow-right"></i>
                     </a>
                 </article>
 
