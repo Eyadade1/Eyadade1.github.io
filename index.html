@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eyad Adel | Portfolio</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root {
-            /* Glassmorphism Color Palette */
             --bg-color: #0f172a;
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
@@ -22,29 +21,41 @@
             --text-muted: #94a3b8;
             --accent-color: #38bdf8;
             --accent-glow: rgba(56, 189, 248, 0.6);
+            /* الخط الأساسي هنا */
+            --main-font: 'Inter', sans-serif;
         }
 
         html {
+            scroll-padding-top: 110px;
             scroll-behavior: smooth;
+        }
+
+        /* لما اللغة تبقى عربي، الخط يتغير لكايرو */
+        html[lang="ar"] {
+            --main-font: 'Cairo', sans-serif;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        }
+
+        /* تطبيق الخط على الموقع بدون المساس بالأيقونات */
+        body, button, input, textarea {
+            font-family: var(--main-font);
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.05), transparent 25%);
+            background-image:
+                    radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05), transparent 25%),
+                    radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.05), transparent 25%);
             background-attachment: fixed;
             color: var(--text-main);
             line-height: 1.6;
             min-height: 100vh;
-            padding: 4rem 180px 4rem 2rem; 
+            padding: 8rem 2rem 4rem 2rem;
             position: relative;
         }
 
@@ -56,92 +67,151 @@
             height: 100vh;
             z-index: -1;
             overflow: hidden;
-            pointer-events: none; 
+            pointer-events: none;
         }
 
         .floating-icon {
             position: absolute;
+            top: 0;
+            left: 0;
             color: var(--text-muted);
             opacity: 0.12;
             user-select: none;
             will-change: transform;
         }
 
-        /* Frameless Right Sidebar Styles - Updated */
-        .sidebar {
+        .navbar {
             position: fixed;
-            right: 2rem;
-            top: 55%; 
-            transform: translateY(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end; 
-            gap: 2.5rem; 
-            padding: 1rem;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .sidebar-link {
+        /* التعديل الجذري في تناسق الناف بار */
+        .nav-container {
+            width: 100%;
+            display: flex;
+            justify-content: center; /* بيسنتر القائمة في النص */
+            align-items: center;
+            padding: 1rem 4vw;
+            position: relative;
+        }
+
+        .nav-links-left {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            margin: 0 !important; /* لغينا المسافات المزعجة تماماً */
+
+            transform: translateX(-50px);
+        }
+
+        html[dir="rtl"] .nav-links-left {
+            transform: translateX(50px); /* عكسنا الإشارة عشان يزقهم يمين في العربي */
+        }
+
+        .nav-link {
             color: var(--text-muted);
             text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: flex-end; 
-            gap: 1.2rem;
+            gap: 0.6rem;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            opacity: 0.6;
+            opacity: 0.7;
+            padding: 0.5rem 0;
         }
 
-        .sidebar-link i {
-            font-size: 1.4rem; 
-            width: 26px;
-            text-align: center;
+        .nav-link i {
+            font-size: 1.1rem;
             transition: all 0.4s ease;
         }
 
-        .sidebar-link span {
-            font-size: 1.05rem; 
+        .nav-link span {
+            font-size: 0.95rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1.8px;
+            letter-spacing: 1px;
             transition: all 0.4s ease;
         }
 
-        .sidebar-link:hover, 
-        .sidebar-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             opacity: 1;
             color: var(--text-main);
-            transform: translateX(-5px); 
+            transform: translateY(-2px);
         }
 
-        .sidebar-link.active i {
+        .nav-link.active i {
             color: var(--accent-color);
-            text-shadow: 0 0 15px var(--accent-glow); 
+            text-shadow: 0 0 15px var(--accent-glow);
             transform: scale(1.15);
         }
 
-        .sidebar-link.active span {
+        .nav-link.active span {
             color: var(--accent-color);
             text-shadow: 0 0 10px var(--accent-glow);
         }
 
-        .sidebar-link::after {
+        .nav-link::after {
             content: '';
             position: absolute;
-            right: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 2px;
-            height: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
             background-color: var(--accent-color);
-            transition: height 0.3s ease, box-shadow 0.3s ease;
+            transition: width 0.3s ease, box-shadow 0.3s ease;
             border-radius: 4px;
         }
 
-        .sidebar-link.active::after {
-            height: 120%;
-            box-shadow: 0 0 10px var(--accent-color); 
+        .nav-link.active::after {
+            width: 100%;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* تثبيت الزراير على الطرف اليمين في الإنجليزي والشمال في العربي */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            position: absolute;
+            right: 4vw;
+        }
+
+        html[dir="rtl"] .nav-actions {
+            right: auto;
+            left: 4vw;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            border-radius: 100px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.4);
+            color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
         }
 
         .cv-btn {
@@ -157,7 +227,6 @@
             font-weight: 500;
             font-size: 0.95rem;
             transition: all 0.3s ease;
-            margin-top: 3rem;
         }
 
         .cv-btn:hover {
@@ -166,9 +235,8 @@
             box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        /* Rest of the layout */
         .container {
-            max-width: 1100px; 
+            max-width: 1100px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -180,51 +248,69 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 2.5rem; 
-            margin-bottom: 2rem; 
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .glass-card:hover {
             transform: translateY(-4px);
             background: var(--glass-hover);
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+            0 0 25px rgba(56, 189, 248, 0.4),
+            inset 0 0 12px rgba(56, 189, 248, 0.1);
         }
 
         .header-section {
             display: flex;
             align-items: center;
-            justify-content: space-between; 
-            gap: 3.5rem; 
+            justify-content: space-between;
+            gap: 3.5rem;
             flex-wrap: wrap;
         }
 
         .profile-pic {
-            width: 210px; 
-            height: 210px; 
+            width: 240px;
+            height: 240px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--glass-border);
+            border: 2px solid rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 30px var(--accent-glow);
             background-color: #1e293b;
-            order: 2; 
+            order: 2;
+            transform: translateY(-25px);
+            transition: all 0.4s ease;
+        }
+
+        html[dir="rtl"] .profile-pic { order: 1; }
+        html[dir="rtl"] .header-info { order: 2; }
+
+        .profile-pic:hover {
+            box-shadow: 0 0 50px var(--accent-color);
+            transform: translateY(-25px) scale(1.02);
         }
 
         .header-info {
-            order: 1; 
-            flex: 1; 
-            min-width: 350px; 
+            order: 1;
+            flex: 1;
+            min-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .header-info h1 {
-            font-size: 3.0rem; 
+            font-size: 3.0rem;
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
         }
 
         .header-info h2 {
-            font-size: 1.25rem; 
+            font-size: 1.25rem;
             color: var(--text-muted);
             font-weight: 400;
             margin-bottom: 1.5rem;
@@ -232,9 +318,9 @@
 
         .header-info p {
             color: var(--text-muted);
-            max-width: 750px; 
+            max-width: 750px;
             margin-bottom: 2rem;
-            font-size: 1.1rem; 
+            font-size: 1.1rem;
             line-height: 1.7;
             font-weight: 300;
         }
@@ -244,30 +330,38 @@
             font-size: 1.05rem;
             line-height: 1.8;
             max-width: 900px;
+            /* الإضافات الجديدة عشان النص يتسنتر في نص البوكس */
+            text-align: center;
+            margin: 0 auto;
         }
 
         .social-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
+            justify-content: center;
         }
 
         .social-links a {
             color: var(--text-muted);
-            font-size: 1.6rem; 
+            font-size: 2.2rem;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .social-links a:hover {
             color: var(--accent-color);
+            transform: translateY(-5px) scale(1.1);
+            text-shadow: 0 5px 15px rgba(56, 189, 248, 0.4);
         }
 
         .social-links a.whatsapp-link:hover {
-            color: #25D366; 
+            color: #25D366;
+            text-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
         }
 
         .section-title {
-            font-size: 1.75rem; 
+            font-size: 1.75rem;
             font-weight: 500;
             margin-bottom: 2rem;
             display: flex;
@@ -281,18 +375,16 @@
             font-size: 1.4rem;
         }
 
-        /* --- Skills Grid & Cards Styles --- */
         .skills-grid {
             display: grid;
-            /* التعديل هنا لترك مساحة فارغة للكارت الثالث */
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
 
         .skill-category-card {
-            padding: 2rem;
-            margin-bottom: 0; 
+            padding: 1.5rem;
+            margin-bottom: 0;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
@@ -300,72 +392,93 @@
 
         .skill-category-header {
             display: flex;
-            flex-direction: row; /* التعديل تم هنا */
-            align-items: center; /* التعديل تم هنا */
+            flex-direction: row;
+            align-items: center;
             gap: 1rem;
         }
 
         .skill-category-icon {
-            width: 55px;
-            height: 55px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: rgba(56, 189, 248, 0.1);
             color: var(--accent-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             border: 1px solid rgba(56, 189, 248, 0.2);
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+            flex-shrink: 0;
         }
 
         .skill-category-header h3 {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             font-weight: 500;
             color: var(--text-main);
             letter-spacing: 0.5px;
+            white-space: normal;
         }
 
         .skills-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem; 
+            gap: 0.8rem;
         }
-        
+
         .skill-category-card .skills-container {
             margin-top: 0;
-            gap: 0.8rem;
         }
 
         .skill-badge {
             background: rgba(255, 255, 255, 0.05);
-            padding: 0.6rem 1.5rem; 
+            padding: 0.5rem 1rem;
             border-radius: 100px;
-            font-size: 0.95rem; 
+            font-size: 0.85rem;
             border: 1px solid var(--glass-border);
             color: var(--text-main);
             letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .skill-badge:active {
+            transform: translateY(0) scale(0.92);
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
-            gap: 1.75rem; 
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.75rem;
         }
 
         .project-card {
             display: flex;
             flex-direction: column;
-            padding: 2.5rem; 
+            padding: 2.5rem;
             margin-bottom: 0;
             height: 100%;
         }
 
         .project-image {
             width: 100%;
-            height: auto; 
-            aspect-ratio: 1849 / 640; 
-            object-fit: cover; 
+            height: auto;
+            aspect-ratio: 1849 / 640;
+            object-fit: cover;
             object-position: top;
             border-radius: 12px;
             margin-bottom: 1.5rem;
@@ -374,11 +487,11 @@
             opacity: 0.85;
             transition: all 0.4s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            cursor: zoom-in; 
+            cursor: zoom-in;
         }
 
         .project-card:hover .project-image {
-            opacity: 1;
+            opacity: 0.95;
             border-color: rgba(56, 189, 248, 0.4);
         }
 
@@ -405,7 +518,7 @@
         }
 
         .modal-content {
-            max-width: 95%; 
+            max-width: 95%;
             max-height: 95%;
             border-radius: 12px;
             box-shadow: 0 10px 50px rgba(0,0,0,0.5);
@@ -414,13 +527,13 @@
             transition: transform 0.3s ease;
             transform: scale(0.95);
         }
-        
+
         .image-modal.show .modal-content {
             transform: scale(1);
         }
 
         .project-card h3 {
-            font-size: 1.35rem; 
+            font-size: 1.35rem;
             font-weight: 500;
             margin-bottom: 1.2rem;
             display: flex;
@@ -428,14 +541,9 @@
             gap: 0.75rem;
         }
 
-        .project-card h3 i {
-            color: var(--accent-color);
-            font-size: 1.15rem;
-        }
-
         .project-card p {
             color: var(--text-muted);
-            font-size: 1rem; 
+            font-size: 1rem;
             margin-bottom: 2rem;
             flex-grow: 1;
             line-height: 1.7;
@@ -443,27 +551,64 @@
 
         .project-link {
             text-decoration: none;
-            color: var(--accent-color);
+            color: var(--text-main);
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 100px;
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.95rem;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: opacity 0.3s ease;
+            gap: 0.6rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             width: fit-content;
         }
 
+        .project-link i {
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+            font-size: 1.1rem;
+        }
+
         .project-link:hover {
-            opacity: 0.7;
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .project-link:hover i {
+            transform: translateX(5px);
+        }
+
+        html[dir="rtl"] .project-link i.fa-arrow-right {
+            transform: rotate(180deg);
+        }
+
+        html[dir="rtl"] .project-link:hover i.fa-arrow-right {
+            transform: rotate(180deg) translateX(5px);
         }
 
         footer {
             text-align: center;
             margin-top: 5rem;
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--glass-border);
-            border-radius: 20px 20px 0 0;
+            padding: 4rem 2rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             background: var(--glass-bg);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        footer:hover {
+            transform: translateY(-4px);
+            background: var(--glass-hover);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+            0 0 25px rgba(56, 189, 248, 0.4),
+            inset 0 0 12px rgba(56, 189, 248, 0.1);
         }
 
         footer h2 {
@@ -474,8 +619,12 @@
 
         footer p {
             color: var(--text-muted);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             font-size: 1.05rem;
+        }
+
+        footer .social-links {
+            margin-top: 3rem;
         }
 
         .contact-btn {
@@ -497,279 +646,468 @@
             box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 1024px) {
-            body { padding: 2rem 2rem 6rem 2rem; }
-            .sidebar {
+            body { padding: 0.5rem 1rem 6rem 1rem; }
+            .navbar {
                 top: auto;
                 bottom: 0;
-                left: 0;
-                right: 0;
-                transform: none;
-                flex-direction: row;
-                justify-content: space-around;
-                background: rgba(15, 23, 42, 0.85);
-                backdrop-filter: blur(10px);
+                border-bottom: none;
                 border-top: 1px solid var(--glass-border);
-                padding: 0.75rem;
-                gap: 0;
             }
-            .sidebar-link { flex-direction: column; gap: 0.2rem; opacity: 1; }
-            .sidebar-link span { font-size: 0.7rem; display: block; }
-            .sidebar-link::after { display: none; }
-            .cv-btn { margin-top: 0; padding: 0.5rem 1rem; font-size: 0.85rem; }
+
+            .nav-container {
+                padding: 0.75rem 0.5rem;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 100%;
+            }
+
+            .nav-links-left, .nav-actions {
+                display: contents;
+            }
+
+            .nav-link, .lang-btn {
+                flex-direction: column;
+                gap: 0.3rem;
+                opacity: 0.7;
+                transform: none !important;
+                padding: 0;
+                background: transparent !important;
+                border: none !important;
+                color: var(--text-muted);
+                margin: 0;
+                box-shadow: none !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .nav-link:hover, .lang-btn:hover {
+                color: var(--text-main);
+            }
+
+            .nav-link.active {
+                opacity: 1;
+            }
+
+            .nav-link i, .lang-btn i {
+                font-size: 1.2rem;
+                transition: all 0.3s ease;
+            }
+
+            .nav-link span, .lang-btn span {
+                font-size: 0.7rem;
+                display: block;
+                font-weight: 600;
+            }
+
+            .nav-link::after { display: none; }
+
+            .cv-btn {
+                display: none !important;
+            }
         }
 
         @media (max-width: 768px) {
-            .header-section { flex-direction: column; text-align: center; }
-            .profile-pic { order: 1; width: 170px; height: 170px; }
-            .header-info { order: 2; min-width: 100%; }
-            .social-links { justify-content: center; }
+            body { padding: 5rem 1rem 6rem 1rem; }
+            .header-section { flex-direction: column; text-align: center; gap: 1.5rem; }
+
+            .profile-pic {
+                width: 180px;
+                height: 180px;
+                transform: translateY(0);
+                margin-bottom: 1rem;
+                order: 1 !important;
+            }
+            .profile-pic:hover { transform: translateY(0) scale(1.02); }
+
+            .header-info {
+                min-width: 100%;
+                order: 2 !important;
+            }
+
+            html[dir="rtl"] .profile-pic { order: 1 !important; }
+            html[dir="rtl"] .header-info { order: 2 !important; }
+
+            .header-info h1 { font-size: 2.2rem; }
+            .header-info h2 { font-size: 1.1rem; }
+            .header-info p { font-size: 0.95rem; }
+            .glass-card, footer { padding: 1.5rem; }
+            .section-title { font-size: 1.4rem; }
             .projects-grid { grid-template-columns: 1fr; }
-            .sidebar-link span { display: none; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .skill-badge { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+
+            .nav-link span, .lang-btn span { display: none; }
+            .nav-link i, .lang-btn i { font-size: 1.4rem; }
+
+            .social-links { gap: 1.2rem; }
+            .social-links a { font-size: 1.8rem; }
+            .contact-btn { width: 100%; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <div id="particles-container"></div>
+<div id="particles-container"></div>
 
-    <nav class="sidebar">
-        <a href="#home" class="sidebar-link active">
-            <span>Home</span>
-            <i class="fas fa-home"></i>
-        </a>
-        <a href="#about" class="sidebar-link">
-            <span>About</span>
-            <i class="fas fa-user"></i>
-        </a>
-        <a href="#skills" class="sidebar-link">
-            <span>Skills</span>
-            <i class="fas fa-laptop-code"></i>
-        </a>
-        <a href="#projects" class="sidebar-link">
-            <span>Projects</span>
-            <i class="fas fa-briefcase"></i>
-        </a>
-        <a href="#contact" class="sidebar-link">
-            <span>Contact</span>
-            <i class="fas fa-paper-plane"></i>
-        </a>
-        
-        <a href="files/CV.pdf" download class="cv-btn">
-            <i class="fas fa-file-download"></i> <span>Download CV</span>
-        </a>
-    </nav>
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-links-left">
+            <a href="#home" class="nav-link active">
+                <i class="fas fa-home"></i>
+                <span class="lang-text" data-en="Home" data-ar="الرئيسية">Home</span>
+            </a>
+            <a href="#about" class="nav-link">
+                <i class="fas fa-user"></i>
+                <span class="lang-text" data-en="About" data-ar="نبذة عني">About</span>
+            </a>
+            <a href="#skills" class="nav-link">
+                <i class="fas fa-screwdriver-wrench"></i>
+                <span class="lang-text" data-en="Skills" data-ar="المهارات">Skills</span>
+            </a>
+            <a href="#projects" class="nav-link">
+                <i class="fas fa-briefcase"></i>
+                <span class="lang-text" data-en="Projects" data-ar="المشاريع">Projects</span>
+            </a>
+            <a href="#contact" class="nav-link">
+                <i class="fas fa-paper-plane"></i>
+                <span class="lang-text" data-en="Contact" data-ar="تواصل معي">Contact</span>
+            </a>
+        </div>
 
-    <div class="container">
-        
-        <header class="glass-card header-section" id="home">
-            <img src="images/unnamed.png" alt="Profile Picture" class="profile-pic">            
-            <div class="header-info">
-                <h1>Eyad Adel Elsherbiny</h1>
-                <h2>Data Analysis Specialist | Computer & Control Systems Engineer </h2>
-                <p>
-I transform raw, complex datasets into actionable insights. By blending data analytics with software engineering principles, I build technical solutions that drive real business impact.
-                </p>
-                <div class="social-links">
-                    <a href="https://github.com/Eyadade1" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/eyad-adel-b040642a4" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://wa.me/201145021510" target="_blank" aria-label="WhatsApp" class="whatsapp-link"><i class="fab fa-whatsapp"></i></a>                    
-                    <a href="mailto:eelsherbainy@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                </div>
+        <div class="nav-actions">
+            <a href="files/CV.pdf" download class="cv-btn">
+                <i class="fas fa-file-download"></i>
+                <span class="lang-text" data-en="Download CV" data-ar="تحميل السيرة الذاتية">Download CV</span>
+            </a>
+            <button id="langToggle" class="lang-btn">
+                <i class="fas fa-globe"></i>
+                <span>عربي</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <header class="glass-card header-section" id="home">
+        <img src="images/unnamed.png" alt="Profile Picture" class="profile-pic">
+        <div class="header-info">
+            <h1 class="lang-text" data-en="Eyad Adel Elsherbiny" data-ar="إياد عادل الشربيني">Eyad Adel Elsherbiny</h1>
+            <h2 class="lang-text" data-en="Data Analyst | Computer Engineer" data-ar="محلل بيانات | مهندس حاسبات">Data Analyst | Computer Engineer</h2>
+            <p class="lang-text" data-en="I simplify complex data and turn it into strategic insights through analysis, visualization, and clear explanation." data-ar="أقوم بتبسيط البيانات المعقدة وتحويلها إلى رؤى استراتيجية من خلال التحليل، وتصور البيانات، والشرح الواضح.">
+                I simplify complex data and turn it into strategic insights through analysis, visualization, and clear explanation.
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/Eyadade1" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/eyad-adel-b040642a4" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://wa.me/201145021510" target="_blank" aria-label="WhatsApp" class="whatsapp-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:eelsherbainy@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <section class="glass-card" id="about">
-            <h2 class="section-title"><i class="fas fa-id-card"></i> About Me</h2>
-            <p class="about-text">
-             With a solid foundation in Computer & Control Systems Engineering, I specialize in transforming complex data into clear, actionable business strategies.
+    <section id="about" style="margin-bottom: 3rem;">
+        <h2 class="section-title" style="margin-left: 0.5rem; margin-right: 0.5rem;"><i class="fas fa-id-card"></i> <span class="lang-text" data-en="About Me" data-ar="نبذة عني">About Me</span></h2>
+
+        <div class="glass-card">
+            <p class="about-text lang-text"
+               data-en="Smart decisions rely on clear data. As an aspiring Data Analyst and a Computer Engineering, I simplify complex data and turn it into strategic insights through analysis, visualization, and clear explanation.<br><br>I bring technical proficiency in SQL, Python, Excel, and data visualization tools to the table. This enables me to not only design efficient data workflows but also craft intuitive dashboards that speak directly to business needs. Thanks to my engineering background, my analytical processes are highly scalable and logically sound.<br><br>Ultimately, I am driven by continuous learning and the desire to empower organizations through impactful business intelligence."
+               data-ar="القرارات الذكية تعتمد على البيانات الواضحة. بصفتي محلل بيانات طموح ومهندس حاسبات، أقوم بتبسيط البيانات المعقدة وتحويلها إلى رؤى استراتيجية من خلال التحليل وتصور البيانات والشرح الواضح.<br><br>أمتلك كفاءة تقنية في استخدام SQL، Python، Excel، وأدوات تصور البيانات. هذا لا يمكنني فقط من تصميم مسارات عمل فعالة للبيانات، بل أيضاً من إنشاء لوحات تحكم (Dashboards) تفاعلية تلبي احتياجات العمل بشكل مباشر. وبفضل خلفيتي الهندسية، تتميز عملياتي التحليلية بقابليتها العالية للتطوير ومنطقها السليم.<br><br>في النهاية، دافعي الأساسي هو التعلم المستمر والرغبة في تمكين المؤسسات من خلال ذكاء الأعمال الفعّال.">
+                Smart decisions rely on clear data. As an aspiring Data Analyst and a Computer Engineering, I simplify complex data and turn it into strategic insights through analysis, visualization, and clear explanation.
                 <br><br>
-I bridge the gap between rigorous technical logic and commercial intelligence. <br>
-Leveraging a strong technical stack including Python, SQL, Excel, and advanced visualization tools, I build analytical solutions and dynamic dashboards that drive real-world impact and support data-driven decisions.            </p>
-        </section>
+                I bring technical proficiency in SQL, Python, Excel, and data visualization tools to the table. This enables me to not only design efficient data workflows but also craft intuitive dashboards that speak directly to business needs. Thanks to my engineering background, my analytical processes are highly scalable and logically sound.
+                <br><br>
+                Ultimately, I am driven by continuous learning and the desire to empower organizations through impactful business intelligence.
+            </p>
+        </div>
+    </section>
 
-        <section id="skills" style="margin-bottom: 3rem;">
-            <h2 class="section-title"><i class="fas fa-terminal"></i> Technical Stack & Skills</h2>
-            
-            <div class="skills-grid">
-                
-                <div class="glass-card skill-category-card">
-                    <div class="skill-category-header">
-                        <div class="skill-category-icon"><i class="fas fa-database"></i></div>
-                        <h3>Data Analysis</h3>
-                    </div>
-                    <div class="skills-container">
-                        <span class="skill-badge">Python</span>
-                        <span class="skill-badge">Pandas</span>
-                        <span class="skill-badge">NumPy</span>
-                        <span class="skill-badge">SQL</span>
-                        <span class="skill-badge">Data Cleaning</span>
-                    </div>
+    <section id="skills" style="margin-bottom: 3rem;">
+        <h2 class="section-title"><i class="fas fa-screwdriver-wrench"></i> <span class="lang-text" data-en="Technical Stack & Skills" data-ar="المهارات والتقنيات">Technical Stack & Skills</span></h2>
+
+        <div class="skills-grid">
+
+            <div class="glass-card skill-category-card">
+                <div class="skill-category-header">
+                    <div class="skill-category-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3 class="lang-text" data-en="Data Analysis & Visualization" data-ar="تحليل وتصور البيانات">Data Analysis & Visualization</h3>
                 </div>
-
-                <div class="glass-card skill-category-card">
-                    <div class="skill-category-header">
-                        <div class="skill-category-icon"><i class="fas fa-chart-pie"></i></div>
-                        <h3>Data Visualization</h3>
-                    </div>
-                    <div class="skills-container">
-                        <span class="skill-badge">Excel</span>
-                        <span class="skill-badge">Power BI</span>
-                        <span class="skill-badge">Tableau</span>
-                        <span class="skill-badge">Matplotlib</span>
-                    </div>
+                <div class="skills-container">
+                    <span class="skill-badge"><i class="fa-solid fa-file-excel"></i> Excel</span>
+                    <span class="skill-badge"><i class="fa-solid fa-chart-bar"></i> Power BI</span>
+                    <span class="skill-badge"><i class="fa-solid fa-chart-line"></i> Tableau</span>
+                    <span class="skill-badge"><i class="fa-solid fa-chart-area"></i> Matplotlib</span>
                 </div>
-
             </div>
-        </section>
 
-        <section id="projects">
-            <h2 class="section-title" style="margin-left: 0.5rem; margin-top: 3rem;"><i class="fas fa-layer-group"></i> Featured Projects</h2>
-            <div class="projects-grid">
-                
-                <article class="glass-card project-card">
-                    <img src="images/Energy-Insights-360.png" alt="Energy Insights Dashboard" class="project-image">
-                    <h3><i class="fas fa-bolt"></i> Energy Insights 360</h3>
-                    <p>A dynamic data dashboard analyzing energy consumption and costs to drive infrastructure efficiency and optimize resource management.</p>
-                    <a href="https://github.com/Eyadade1/Energy-Insights-360" target="_blank" class="project-link">
-                        View Repository <i class="fas fa-arrow-right"></i>
-                    </a>
-                </article>
-
-                <article class="glass-card project-card">
-                    <img src="images/Sales-Insight-360.png" alt="Sales Insight Dashboard" class="project-image">
-                    <h3><i class="fas fa-chart-line"></i> Sales Insight 360</h3>
-                    <p>A comprehensive dashboard tracking commercial sales metrics and financial trends to deliver clear, actionable business intelligence.</p>
-                    <a href="https://github.com/Eyadade1/Sales-Insight-360" target="_blank" class="project-link">
-                        View Repository <i class="fas fa-arrow-right"></i>
-                    </a>
-                </article>
-
+            <div class="glass-card skill-category-card">
+                <div class="skill-category-header">
+                    <div class="skill-category-icon"><i class="fas fa-cogs"></i></div>
+                    <h3 class="lang-text" data-en="Data Processing" data-ar="معالجة البيانات">Data Processing</h3>
+                </div>
+                <div class="skills-container">
+                    <span class="skill-badge"><i class="fa-brands fa-python"></i> Python</span>
+                    <span class="skill-badge"><i class="fa-solid fa-table"></i> Pandas</span>
+                    <span class="skill-badge"><i class="fa-solid fa-calculator"></i> NumPy</span>
+                    <span class="skill-badge"><i class="fa-solid fa-broom"></i> <span class="lang-text" data-en="Data Cleaning" data-ar="تنظيف البيانات">Data Cleaning</span></span>
+                    <span class="skill-badge"><i class="fa-solid fa-chart-simple"></i> <span class="lang-text" data-en="Statistical Analysis" data-ar="التحليل الإحصائي">Statistical Analysis</span></span>
+                </div>
             </div>
-        </section>
 
-        <footer id="contact">
-            <h2>Let's Connect</h2>
-            <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
-            <a href="mailto:eelsherbainy@gmail.com" class="contact-btn"><i class="fas fa-paper-plane"></i> Get In Touch</a>
-        </footer>
+            <div class="glass-card skill-category-card">
+                <div class="skill-category-header">
+                    <div class="skill-category-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="lang-text" data-en="Databases" data-ar="قواعد البيانات">Databases</h3>
+                </div>
+                <div class="skills-container">
+                    <span class="skill-badge"><i class="fa-solid fa-server"></i> SQL</span>
+                    <span class="skill-badge"><i class="fa-solid fa-bolt"></i> Power Query</span>
+                    <span class="skill-badge"><i class="fa-solid fa-table-list"></i> Pivot Tables</span>
+                </div>
+            </div>
 
-    </div>
+            <div class="glass-card skill-category-card">
+                <div class="skill-category-header">
+                    <div class="skill-category-icon"><i class="fas fa-code"></i></div>
+                    <h3 class="lang-text" data-en="Computer Science Fundamentals" data-ar="أساسيات علوم الحاسب">Computer Science Fundamentals</h3>
+                </div>
+                <div class="skills-container">
+                    <span class="skill-badge"><i class="fa-solid fa-lightbulb"></i> <span class="lang-text" data-en="Problem Solving" data-ar="حل المشكلات">Problem Solving</span></span>
+                    <span class="skill-badge"><i class="fa-solid fa-network-wired"></i> <span class="lang-text" data-en="Data Structures & Algorithms" data-ar="هياكل البيانات والخوارزميات">Data Structures & Algorithms</span></span>
+                    <span class="skill-badge"><i class="fa-solid fa-cubes"></i> OOP</span>
+                </div>
+            </div>
 
-    <div id="imageModal" class="image-modal">
-        <img class="modal-content" id="fullImage" alt="Full Project Image">
-    </div>
+        </div>
+    </section>
 
-    <script>
-        // Scroll Active Link Tracking
-        const sections = document.querySelectorAll("header, section, footer");
-        const navLinks = document.querySelectorAll(".sidebar-link");
+    <section id="projects">
+        <h2 class="section-title" style="margin-left: 0.5rem; margin-right: 0.5rem; margin-top: 3rem;"><i class="fas fa-layer-group"></i> <span class="lang-text" data-en="Featured Projects" data-ar="أبرز المشاريع">Featured Projects</span></h2>
+        <div class="projects-grid">
 
-        window.addEventListener("scroll", () => {
-            let current = "";
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - sectionHeight / 3)) {
-                    current = section.getAttribute("id");
-                }
-            });
+            <article class="glass-card project-card">
+                <img src="images/Energy-Insights-360.png" alt="Energy Insights Dashboard" class="project-image">
+                <h3><i class="fas fa-bolt"></i> <span class="lang-text" data-en="Energy Insights 360" data-ar="رؤى الطاقة 360">Energy Insights 360</span></h3>
+                <p class="lang-text" data-en="A dynamic data dashboard analyzing energy consumption and costs to drive infrastructure efficiency and optimize resource management." data-ar="لوحة بيانات تفاعلية لتحليل استهلاك وتكاليف الطاقة بهدف رفع كفاءة البنية التحتية وتحسين إدارة الموارد المتاحة.">A dynamic data dashboard analyzing energy consumption and costs to drive infrastructure efficiency and optimize resource management.</p>
+                <a href="https://github.com/Eyadade1/Energy-Insights-360" target="_blank" class="project-link">
+                    <span class="lang-text" data-en="View Details" data-ar="عرض التفاصيل">View Details</span> <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
 
-            if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 10) {
-                current = "contact";
+            <article class="glass-card project-card">
+                <img src="images/Sales-Insight-360.png" alt="Sales Insight Dashboard" class="project-image">
+                <h3><i class="fas fa-chart-line"></i> <span class="lang-text" data-en="Sales Insight 360" data-ar="رؤى المبيعات 360">Sales Insight 360</span></h3>
+                <p class="lang-text" data-en="A comprehensive dashboard tracking commercial sales metrics and financial trends to deliver clear, actionable business intelligence." data-ar="لوحة تحكم شاملة تتتبع مقاييس المبيعات التجارية والاتجاهات المالية لتقديم ذكاء أعمال واضح وقابل للتنفيذ.">A comprehensive dashboard tracking commercial sales metrics and financial trends to deliver clear, actionable business intelligence.</p>
+                <a href="https://github.com/Eyadade1/Sales-Insight-360" target="_blank" class="project-link">
+                    <span class="lang-text" data-en="View Details" data-ar="عرض التفاصيل">View Details</span> <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="glass-card project-card" style="min-height: 400px;">
+            </article>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h2 class="lang-text" data-en="Let's Connect" data-ar="لنتواصل معاً">Let's Connect</h2>
+        <p class="lang-text" data-en="I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions." data-ar="أنا منفتح دائماً لمناقشة المشاريع الجديدة، الأفكار الإبداعية، أو فرص أن أكون جزءاً من نجاح رؤيتك.">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
+
+        <a href="mailto:eelsherbainy@gmail.com" class="contact-btn"><i class="fas fa-paper-plane"></i> <span class="lang-text" data-en="Get In Touch" data-ar="تواصل معي">Get In Touch</span></a>
+
+        <div class="social-links">
+            <a href="https://github.com/Eyadade1" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/eyad-adel-b040642a4" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://wa.me/201145021510" target="_blank" aria-label="WhatsApp" class="whatsapp-link"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:eelsherbainy@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+    </footer>
+
+</div>
+
+<div id="imageModal" class="image-modal">
+    <img class="modal-content" id="fullImage" alt="Full Project Image">
+</div>
+
+<script>
+    const langToggleBtn = document.getElementById('langToggle');
+    const langElements = document.querySelectorAll('.lang-text');
+    let currentLang = 'en';
+
+    langToggleBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'en' ? 'ar' : 'en';
+
+        document.documentElement.setAttribute('lang', currentLang);
+        document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+
+        langToggleBtn.querySelector('span').textContent = currentLang === 'en' ? 'عربي' : 'English';
+
+        langElements.forEach(el => {
+            el.innerHTML = el.getAttribute(`data-${currentLang}`);
+        });
+    });
+
+    const sections = document.querySelectorAll("header, section, footer");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 150)) {
+                current = section.getAttribute("id");
+            }
+        });
+
+        if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 10) {
+            current = "contact";
+        }
+
+        navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (current && link.getAttribute("href").includes(current)) {
+                link.classList.add("active");
+            }
+        });
+    });
+
+    const container = document.getElementById('particles-container');
+    const iconClasses = [
+        '<i class="fa-brands fa-python"></i>',
+        '<i class="fa-solid fa-file-excel"></i>',
+        '<i class="fa-solid fa-database"></i>',
+        '<i class="fa-solid fa-chart-column"></i>',
+        '<i class="fa-solid fa-chart-pie"></i>',
+        '<i class="fa-solid fa-c"></i>',
+        '<i class="fa-solid fa-project-diagram"></i>',
+        '<i class="fa-solid fa-chart-line"></i>',
+        '<i class="fa-solid fa-server"></i>',
+        '<i class="fa-solid fa-network-wired"></i>',
+        '<i class="fa-solid fa-microchip"></i>',
+        '<i class="fa-solid fa-robot"></i>',
+        '<i class="fa-solid fa-brain"></i>',
+        '<i class="fa-solid fa-magnifying-glass-chart"></i>',
+        '<i class="fa-solid fa-chart-area"></i>',
+        '<i class="fa-solid fa-gears"></i>'
+    ];
+
+    const numParticles = 50;
+    const particles = [];
+    let mouse = { x: -1000, y: -1000 };
+    const interactionRadius = 150;
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    function createParticleObject(el, x, y) {
+        return {
+            el: el,
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 0.6,
+            vy: (Math.random() - 0.5) * 0.6,
+            angle: Math.random() * 360,
+            spin: (Math.random() - 0.5) * 0.4
+        };
+    }
+
+    for (let i = 0; i < numParticles; i++) {
+        let el = document.createElement('div');
+        el.className = 'floating-icon';
+        el.innerHTML = iconClasses[Math.floor(Math.random() * iconClasses.length)];
+        let size = Math.random() * 20 + 18;
+        el.style.fontSize = `${size}px`;
+        container.appendChild(el);
+
+        particles.push(createParticleObject(
+            el,
+            Math.random() * window.innerWidth,
+            Math.random() * window.innerHeight
+        ));
+    }
+
+    function animate() {
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.angle += p.spin;
+            if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+            if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+
+            let dx = p.x - mouse.x;
+            let dy = p.y - mouse.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < interactionRadius) {
+                let force = (interactionRadius - dist) / interactionRadius;
+                p.vx += (dx / dist) * force * 0.15;
+                p.vy += (dy / dist) * force * 0.15;
             }
 
-            navLinks.forEach((link) => {
-                link.classList.remove("active");
-                if (current && link.getAttribute("href").includes(current)) {
-                    link.classList.add("active"); 
-                }
-            });
+            let speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+            if (speed > 1.0) {
+                p.vx = (p.vx / speed) * 1.0;
+                p.vy = (p.vy / speed) * 1.0;
+            }
+            p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg)`;
         });
+        requestAnimationFrame(animate);
+    }
+    animate();
 
-        // Floating Particles Logic
-        const container = document.getElementById('particles-container');
-        const iconClasses = [
-            '<i class="fa-brands fa-python"></i>',
-            '<i class="fa-solid fa-file-excel"></i>',
-            '<i class="fa-solid fa-database"></i>',
-            '<i class="fa-solid fa-chart-column"></i>',
-            '<i class="fa-solid fa-chart-pie"></i>',
-            '<i class="fa-solid fa-c"></i>',
-            '<i class="fa-solid fa-project-diagram"></i>'
-        ];
+    const modal = document.getElementById("imageModal");
+    const fullImage = document.getElementById("fullImage");
+    const projectImages = document.querySelectorAll(".project-image");
 
-        const numParticles = 25;
-        const particles = [];
-        let mouse = { x: -1000, y: -1000 };
-        const interactionRadius = 150;
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+    projectImages.forEach(img => {
+        img.addEventListener("mouseenter", function() {
+            modal.classList.add("show");
+            fullImage.src = this.src;
         });
-
-        for (let i = 0; i < numParticles; i++) {
-            let el = document.createElement('div');
-            el.className = 'floating-icon';
-            el.innerHTML = iconClasses[Math.floor(Math.random() * iconClasses.length)];
-            let size = Math.random() * 20 + 18; 
-            el.style.fontSize = `${size}px`;
-            container.appendChild(el);
-            particles.push({
-                el: el,
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
-                angle: Math.random() * 360,
-                spin: (Math.random() - 0.5) * 0.4
-            });
-        }
-
-        function animate() {
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.angle += p.spin;
-                if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
-                if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
-
-                let dx = p.x - mouse.x;
-                let dy = p.y - mouse.y;
-                let dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < interactionRadius) {
-                    let force = (interactionRadius - dist) / interactionRadius;
-                    p.vx += (dx / dist) * force * 0.15;
-                    p.vy += (dy / dist) * force * 0.15;
-                }
-
-                let speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-                if (speed > 1.0) {
-                    p.vx = (p.vx / speed) * 1.0;
-                    p.vy = (p.vy / speed) * 1.0;
-                }
-                p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.angle}deg)`;
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // Image Modal Logic
-        const modal = document.getElementById("imageModal");
-        const fullImage = document.getElementById("fullImage");
-        const projectImages = document.querySelectorAll(".project-image");
-
-        projectImages.forEach(img => {
-            img.addEventListener("mouseenter", function() {
-                modal.classList.add("show");
-                fullImage.src = this.src;
-            });
-            img.addEventListener("mouseleave", function() {
-                modal.classList.remove("show");
-            });
+        img.addEventListener("mouseleave", function() {
+            modal.classList.remove("show");
         });
-    </script>
+    });
+
+    const skillBadges = document.querySelectorAll('.skill-badge');
+
+    skillBadges.forEach(badge => {
+        badge.addEventListener('click', function(e) {
+            const icon = this.querySelector('i');
+            if (!icon) return;
+
+            const popIcon = document.createElement('i');
+            popIcon.className = icon.className + ' pop-icon';
+            popIcon.style.left = e.clientX + 'px';
+            popIcon.style.top = e.clientY + 'px';
+            document.body.appendChild(popIcon);
+
+            setTimeout(() => {
+                const finalX = e.clientX;
+                const finalY = e.clientY - 100;
+
+                popIcon.remove();
+
+                let el = document.createElement('div');
+                el.className = 'floating-icon';
+                el.innerHTML = `<i class="${icon.className}"></i>`;
+                let size = Math.random() * 20 + 18;
+                el.style.fontSize = `${size}px`;
+                container.appendChild(el);
+
+                const newParticle = createParticleObject(el, finalX, finalY);
+                particles.push(newParticle);
+
+            }, 780);
+        });
+    });
+</script>
 </body>
 </html>
